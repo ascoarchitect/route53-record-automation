@@ -2,9 +2,15 @@ name: 'Terraform'
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - staging
+      - develop
   pull_request:
-    branches: [ main, dev, prod ]
+    branches:
+      - main
+      - staging
+      - develop
 
 permissions:
   id-token: write
@@ -15,7 +21,14 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: ${{ github.event.pull_request.base.ref || github.ref_name }}
+
+    # Define environment based on the branch context
+    environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || github.ref_name }}
+
+    # Prevent concurrent runs of the same workflow on the same branch
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
     - name: Checkout
@@ -32,11 +45,16 @@ jobs:
       with:
         terraform_version: ${{ vars.TERRAFORM_VERSION }}
 
+    - name: Terraform Format Check
+      run: |
+        cd root
+        terraform fmt -check -recursive
+
     - name: Terraform Init
       run: |
         cd root
         terraform init \
-          -backend-config="../environments/${{ github.event.pull_request.base.ref || github.ref_name }}/backend.hcl"
+          -backend-config="../environments/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || github.ref_name }}/backend.hcl"
 
     - name: Terraform Validate
       run: |
@@ -48,7 +66,7 @@ jobs:
       run: |
         cd root
         terraform plan \
-          -var-file="../environments/${{ github.event.pull_request.base.ref || github.ref_name }}/terraform.tfvars" \
+          -var-file="../environments/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || github.ref_name }}/terraform.tfvars" \
           -out=tfplan
 
     - name: Add Plan Comment
@@ -64,16 +82,12 @@ jobs:
             body: '```terraform\n' + output + '\n```'
           })
 
-    - name: Terraform Apply - Dev
-      if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    - name: Terraform Apply
+      if: |
+        github.event_name == 'push' &&
+        (github.ref == 'refs/heads/develop' ||
+         github.ref == 'refs/heads/staging' ||
+         github.ref == 'refs/heads/main')
       run: |
         cd root
-        terraform apply -auto-approve \
-          -var-file="../environments/dev/terraform.tfvars"
-
-    - name: Terraform Apply - Prod
-      if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
-      run: |
-        cd root
-        terraform apply -auto-approve \
-          -var-file="../environments/prod/terraform.tfvars"
+        terraform apply -auto-approve tfplan
