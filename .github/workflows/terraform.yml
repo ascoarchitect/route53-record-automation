@@ -60,6 +60,7 @@ jobs:
     - name: Terraform Plan
       if: github.event_name == 'pull_request'
       run: |
+        cd root
         ls -la ../environments/dev/  # Debug line to verify path from root directory
         terraform plan \
           -var-file="../environments/dev/terraform.tfvars" \
