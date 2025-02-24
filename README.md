@@ -42,7 +42,8 @@ The following is a policy which is granted to the IAM role for carrying out acti
                 "route53:ListTagsForResource",
                 "route53:ListTagsForResources",
                 "route53:ChangeTagsForResource",
-                "route53:GetReusableDelegationSet"
+                "route53:GetReusableDelegationSet",
+                "route53:CreateReusableDelegationSet"
             ],
             "Resource": "*"
         },
