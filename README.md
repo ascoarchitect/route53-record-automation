@@ -190,7 +190,7 @@ module "my_domain_com_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "~> 3.0"
 
-  zone_id = module.my_domain_com.route53_zone_zone_id["my-domain.com"]
+  zone_name = "my-domain.com"
 
   records = [
     {
@@ -247,7 +247,7 @@ module "subdomain_zone_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "~> 3.0"
 
-  zone_id = module.subdomain_zone.route53_zone_zone_id["subdomain.my-domain.com"]
+  zone_name = "subdomain.my-domain.com"
   
   records = [
     # Subdomain records here
@@ -261,7 +261,7 @@ module "delegation_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "~> 3.0"
 
-  zone_id = module.my_domain_com.route53_zone_zone_id["my-domain.com"]
+  zone_name = "my-domain.com"
 
   records = [
     {
