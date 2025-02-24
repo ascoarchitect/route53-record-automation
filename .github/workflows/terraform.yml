@@ -1,13 +1,10 @@
-# .github/workflows/terraform.yml
-
 name: 'Terraform'
 
 on:
   push:
-    branches:
-      - dev
-      - prod
+    branches: [ main ]
   pull_request:
+    branches: [ main, dev, prod ]
 
 permissions:
   id-token: write
@@ -34,7 +31,7 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ vars.TERRAFORM_VERSION }}
-#      
+
     - name: Terraform Init
       run: |
         cd root
@@ -47,19 +44,19 @@ jobs:
         terraform validate
 
     - name: Terraform Plan
-      if: github.event_name == 'pull_request'
+      id: plan
       run: |
         cd root
         terraform plan \
-          -var-file="../environments/${{ github.event.pull_request.base.ref }}/terraform.tfvars" \
+          -var-file="../environments/${{ github.event.pull_request.base.ref || github.ref_name }}/terraform.tfvars" \
           -out=tfplan
-      
+
     - name: Add Plan Comment
       if: github.event_name == 'pull_request'
       uses: actions/github-script@v7
       with:
         script: |
-          const output = require('child_process').execSync('cd root && terraform show -no-color tfplan').toString()
+          const output = require('child_process').execSync('cd root && terraform show tfplan').toString()
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
@@ -67,9 +64,16 @@ jobs:
             body: '```terraform\n' + output + '\n```'
           })
 
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    - name: Terraform Apply - Dev
+      if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
       run: |
         cd root
         terraform apply -auto-approve \
-          -var-file="../environments/${{ github.ref_name }}/terraform.tfvars"
+          -var-file="../environments/dev/terraform.tfvars"
+
+    - name: Terraform Apply - Prod
+      if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
+      run: |
+        cd root
+        terraform apply -auto-approve \
+          -var-file="../environments/prod/terraform.tfvars"
