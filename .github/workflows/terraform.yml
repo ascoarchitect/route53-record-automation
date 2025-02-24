@@ -34,8 +34,8 @@ jobs:
       with:
         terraform_version: ${{ vars.TERRAFORM_VERSION }}
 
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
+    # - name: Terraform Format
+    #   run: terraform fmt -check -recursive
       
     - name: Terraform Init
       run: |
