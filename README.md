@@ -20,6 +20,58 @@ This repository contains Terraform configurations for managing Route53 DNS zones
   - `AWS_REGION`: AWS region for deployment (e.g., eu-west-2)
   - `TERRAFORM_VERSION`: Version of Terraform to use (e.g., 1.7.x)
 
+## AWS IAM Policy
+
+The following is a policy which is granted to the IAM role for carrying out actions within the scope of this project, using a least-privilege approach:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Action": [
+                "route53:GetHostedZone",
+                "route53:ListHostedZones",
+                "route53:ListResourceRecordSets",
+                "route53:ChangeResourceRecordSets",
+                "route53:CreateHostedZone",
+                "route53:DeleteHostedZone",
+                "route53:GetChange",
+                "route53:ListTagsForResource",
+                "route53:ListTagsForResources",
+                "route53:ChangeTagsForResource",
+                "route53:GetReusableDelegationSet"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::your-s3-bucket",
+                "arn:aws:s3:::your-s3-bucket/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem"
+            ],
+            "Resource": "arn:aws:dynamodb:*:*:table/your-dynamodb-table"
+        }
+    ]
+}
+```
+
 ## Project Structure
 
 ```
