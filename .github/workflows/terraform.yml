@@ -33,8 +33,6 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ vars.TERRAFORM_VERSION }}
-
-
       
     - name: Terraform Init
       run: |
