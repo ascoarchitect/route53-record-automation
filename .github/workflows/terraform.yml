@@ -51,7 +51,7 @@ jobs:
       run: |
         cd root
         terraform plan \
-          -var-file="../environments/${{ github.event.pull_request.base.ref }}/terraform.tfvars" \
+          -var-file="../environments/${{ github.event.pull_request.base.ref || github.ref_name }}/terraform.tfvars" \
           -out=tfplan
       
     - name: Add Plan Comment
