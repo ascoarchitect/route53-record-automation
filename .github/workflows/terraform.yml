@@ -34,6 +34,17 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ vars.TERRAFORM_VERSION }}
+
+    - name: Debug Directory Structure
+      run: |
+        echo "Current directory:"
+        pwd
+        echo "Directory listing:"
+        ls -la
+        echo "Environments directory:"
+        ls -la environments/
+        echo "Dev environment directory:"
+        ls -la environments/dev/
 #      
     - name: Terraform Init
       run: |
@@ -49,9 +60,9 @@ jobs:
     - name: Terraform Plan
       if: github.event_name == 'pull_request'
       run: |
-        cd root
+        ls -la ../environments/dev/  # Debug line to verify path from root directory
         terraform plan \
-          -var-file="../environments/${{ github.event.pull_request.base.ref || github.ref_name }}/terraform.tfvars" \
+          -var-file="../environments/dev/terraform.tfvars" \
           -out=tfplan
       
     - name: Add Plan Comment
