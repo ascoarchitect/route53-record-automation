@@ -31,7 +31,7 @@ module "testing_zone_records" {
       name    = "wwws"
       type    = "A"
       ttl     = 300
-      records = ["192.0.2.4"]  # Replace with actual IP
+      records = ["192.0.2.5"]  # Replace with actual IP
     },
     {
       name    = "www"
