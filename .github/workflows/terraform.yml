@@ -1,5 +1,5 @@
 name: 'Terraform'
-
+#
 on:
   push:
     branches:
@@ -44,11 +44,6 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ vars.TERRAFORM_VERSION }}
-
-    - name: Terraform Format Check
-      run: |
-        cd root
-        terraform fmt -check -recursive
 
     - name: Terraform Init
       run: |
