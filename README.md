@@ -84,7 +84,7 @@ The following is a policy which is granted to the IAM role for carrying out acti
 │   ├── outputs.tf
 │   └── variables.tf
 ├── environments
-│   ├── dev
+│   ├── develop
 │   │   ├── backend.hcl
 │   │   └── terraform.tfvars
 │   ├── staging
