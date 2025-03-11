@@ -1,37 +1,5 @@
 # root/zones/outputs.tf
 
-# output "test_zone_com_zone_id" {
-#   description = "Zone ID for test-zone.com"
-#   value       = module.test_zone_com.route53_zone_zone_id["test-zone.com"]
-# }
-
-# output "test_zone_com_name_servers" {
-#   description = "Name servers for test-zone.com"
-#   value       = module.test_zone_com.route53_zone_name_servers["test-zone.com"]
-# }
-
-# output "test_zone_com_records" {
-#   description = "DNS records for test-zone.com"
-#   value       = module.test_zone_com_records.route53_record_name
-# }
-
-# output "testing_zone_com_zone_id" {
-#   description = "Zone ID for test-zone.com"
-#   value       = module.testing_zone_com.route53_zone_zone_id["testing-zone.com"]
-# }
-
-# output "testing_zone_com_name_servers" {
-#   description = "Name servers for testing-zone.com"
-#   value       = module.testing_zone_com.route53_zone_name_servers["testing-zone.com"]
-# }
-
-# output "testing_zone_com_records" {
-#   description = "DNS records for testing-zone.com"
-#   value       = module.testing_zone_com_records.route53_record_name
-# }
-
-# root/zones/outputs.tf
-
 # Output test-zone.com details
 output "test_zone_com" {
   description = "Details for test-zone.com"
