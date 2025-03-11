@@ -24,9 +24,9 @@ output "testing_zone_com" {
 output "subdomain_test_zone_com" {
   description = "Details for subdomain.test-zone.com"
   value = {
-    zone_id      = module.subdomain_zone.route53_zone_zone_id["subdomain.test-zone.com"]
-    name_servers = module.subdomain_zone.route53_zone_name_servers["subdomain.test-zone.com"]
-    records      = module.subdomain_zone_records.route53_record_name
+    zone_id      = module.subdomain_test-zone_com_subdomain_zone.route53_zone_zone_id["subdomain.test-zone.com"]
+    name_servers = module.subdomain_test-zone_com_subdomain_zone.route53_zone_name_servers["subdomain.test-zone.com"]
+    records      = module.subdomain_test-zone_com_subdomain_zone_records.route53_record_name
   }
 }
 
@@ -45,9 +45,9 @@ output "all_zones" {
       records      = module.testing_zone_records.route53_record_name
     }
     subdomain_test_zone_com = {
-      zone_id      = module.subdomain_zone.route53_zone_zone_id["subdomain.test-zone.com"]
-      name_servers = module.subdomain_zone.route53_zone_name_servers["subdomain.test-zone.com"]
-      records      = module.subdomain_zone_records.route53_record_name
+      zone_id      = module.subdomain_test-zone_com_subdomain_zone.route53_zone_zone_id["subdomain.test-zone.com"]
+      name_servers = module.subdomain_test-zone_com_subdomain_zone.route53_zone_name_servers["subdomain.test-zone.com"]
+      records      = module.subdomain_test-zone_com_subdomain_zone_records.route53_record_name
     }
   }
 }

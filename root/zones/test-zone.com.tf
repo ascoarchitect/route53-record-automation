@@ -3,7 +3,7 @@
 # Create the zone
 module "test_zone_com" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 3.0"
+  version = "~> 4.0"
   zones = {
     "test-zone.com" = {
       comment = "Test zone managed by Terraform"
@@ -21,7 +21,7 @@ module "test_zone_com" {
 # Create zone records
 module "test_zone_com_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 3.0"
+  version = "~> 4.0"
   
   zone_name = "test-zone.com"
   

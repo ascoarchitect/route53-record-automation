@@ -1,9 +1,9 @@
 # root/zones/subdomain.test-zone.com.tf
 
 # Create delegation set
-module "delegation_sets" {
+module "subdomain_test-zone_com_delegation_set" {
   source  = "terraform-aws-modules/route53/aws//modules/delegation-sets"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   delegation_sets = {
     "subdomain_set" = {
@@ -13,25 +13,25 @@ module "delegation_sets" {
 }
 
 # Create the subdomain zone using the delegation set
-module "subdomain_zone" {
+module "subdomain_test-zone_com_subdomain_zone" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   zones = {
     "subdomain.test-zone.com" = {
       comment           = "Subdomain of test-zone.com managed by Terraform"
-      delegation_set_id = module.delegation_sets.route53_delegation_set_id["subdomain_set"]
+      delegation_set_id = module.subdomain_test-zone_com_delegation_set.route53_delegation_set_id["subdomain_set"]
       tags              = var.common_tags
     }
   }
 
-  depends_on = [module.delegation_sets]
+  depends_on = [module.subdomain_test-zone_com_delegation_set]
 }
 
 # Configure the records for the subdomain
-module "subdomain_zone_records" {
+module "subdomain_test-zone_com_subdomain_zone_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   zone_name = "subdomain.test-zone.com"
 
@@ -50,13 +50,13 @@ module "subdomain_zone_records" {
     }
   ]
 
-  depends_on = [module.subdomain_zone]
+  depends_on = [module.subdomain_test-zone_com_subdomain_zone]
 }
 
 # Add NS records to the parent zone for delegation
-module "delegation_records" {
+module "subdomain_test-zone_com_delegation_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   zone_name = "test-zone.com"
 
@@ -65,9 +65,9 @@ module "delegation_records" {
       name    = "subdomain"
       type    = "NS"
       ttl     = 300
-      records = module.subdomain_zone.route53_zone_name_servers["subdomain.test-zone.com"]
+      records = module.subdomain_test-zone_com_subdomain_zone.route53_zone_name_servers["subdomain.test-zone.com"]
     }
   ]
 
-  depends_on = [module.test_zone_com, module.subdomain_zone]
+  depends_on = [module.test_zone_com, module.subdomain_test-zone_com_subdomain_zone]
 }
