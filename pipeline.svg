@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600">
+  <!-- Background -->
+  <rect width="1000" height="600" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#333">Route53 Terraform Pipeline and Promotion Flow</text>
+  
+  <!-- Environment Containers -->
+  <rect x="100" y="100" width="800" height="120" rx="10" fill="#e1f5fe" stroke="#0288d1" stroke-width="2"/>
+  <rect x="100" y="250" width="800" height="120" rx="10" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+  <rect x="100" y="400" width="800" height="120" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  
+  <!-- Environment Labels -->
+  <text x="140" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#0288d1">Develop Environment</text>
+  <text x="140" y="280" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#388e3c">Staging Environment</text>
+  <text x="140" y="430" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f57c00">Production Environment</text>
+  
+  <!-- Actor Color Coding Boxes - Infrastructure/Network Team -->
+  <rect x="150" y="150" width="120" height="40" rx="5" fill="#e1bee7" stroke="#7b1fa2" stroke-width="2"/>
+  <rect x="150" y="300" width="120" height="40" rx="5" fill="#e1bee7" stroke="#7b1fa2" stroke-width="2"/>
+  <rect x="150" y="450" width="120" height="40" rx="5" fill="#e1bee7" stroke="#7b1fa2" stroke-width="2"/>
+  
+  <!-- Actor Color Coding Boxes - GitHub Actions -->
+  <rect x="320" y="150" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <rect x="440" y="150" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <rect x="680" y="150" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  
+  <rect x="320" y="300" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <rect x="440" y="300" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <rect x="680" y="300" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  
+  <rect x="320" y="450" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <rect x="440" y="450" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <rect x="680" y="450" width="100" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  
+  <!-- Actor Color Coding Boxes - Change Approvers -->
+  <rect x="560" y="150" width="100" height="40" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <rect x="560" y="300" width="100" height="40" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <rect x="560" y="450" width="100" height="40" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  
+  <!-- Branch Representations -->
+  <text x="210" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#7b1fa2">feature/*</text>
+  <text x="210" y="325" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#7b1fa2">staging</text>
+  <text x="210" y="475" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#7b1fa2">main</text>
+  
+  <!-- Pipeline Steps Develop -->
+  <text x="370" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">SAST Check</text>
+  <text x="490" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">Terraform Plan</text>
+  <text x="610" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1976d2">PR Review</text>
+  <text x="730" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">Apply</text>
+  
+  <!-- Pipeline Steps Staging -->
+  <text x="370" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">SAST Check</text>
+  <text x="490" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">Terraform Plan</text>
+  <text x="610" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1976d2">PR Review</text>
+  <text x="730" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">Apply</text>
+  
+  <!-- Pipeline Steps Production -->
+  <text x="370" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">SAST Check</text>
+  <text x="490" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">Terraform Plan</text>
+  <text x="610" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1976d2">PR Review</text>
+  <text x="730" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">Apply</text>
+  
+  <!-- Result Icons -->
+  <rect x="800" y="150" width="60" height="40" rx="20" fill="#b3e5fc" stroke="#0277bd" stroke-width="2"/>
+  <text x="830" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0277bd">Dev DNS</text>
+  
+  <rect x="800" y="300" width="60" height="40" rx="20" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="830" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2e7d32">Staging DNS</text>
+  
+  <rect x="800" y="450" width="60" height="40" rx="20" fill="#ffe0b2" stroke="#e65100" stroke-width="2"/>
+  <text x="830" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#e65100">Prod DNS</text>
+  
+  <!-- Flow Arrows -->
+  <!-- Horizontal Flow Arrows Develop -->
+  <line x1="270" y1="170" x2="310" y2="170" stroke="#333" stroke-width="2"/>
+  <polygon points="310,170 302,166 302,174" fill="#333"/>
+  
+  <line x1="420" y1="170" x2="430" y2="170" stroke="#333" stroke-width="2"/>
+  <polygon points="430,170 422,166 422,174" fill="#333"/>
+  
+  <line x1="540" y1="170" x2="550" y2="170" stroke="#333" stroke-width="2"/>
+  <polygon points="550,170 542,166 542,174" fill="#333"/>
+  
+  <line x1="660" y1="170" x2="670" y2="170" stroke="#333" stroke-width="2"/>
+  <polygon points="670,170 662,166 662,174" fill="#333"/>
+  
+  <line x1="780" y1="170" x2="790" y2="170" stroke="#333" stroke-width="2"/>
+  <polygon points="790,170 782,166 782,174" fill="#333"/>
+  
+  <!-- Horizontal Flow Arrows Staging -->
+  <line x1="270" y1="320" x2="310" y2="320" stroke="#333" stroke-width="2"/>
+  <polygon points="310,320 302,316 302,324" fill="#333"/>
+  
+  <line x1="420" y1="320" x2="430" y2="320" stroke="#333" stroke-width="2"/>
+  <polygon points="430,320 422,316 422,324" fill="#333"/>
+  
+  <line x1="540" y1="320" x2="550" y2="320" stroke="#333" stroke-width="2"/>
+  <polygon points="550,320 542,316 542,324" fill="#333"/>
+  
+  <line x1="660" y1="320" x2="670" y2="320" stroke="#333" stroke-width="2"/>
+  <polygon points="670,320 662,316 662,324" fill="#333"/>
+  
+  <line x1="780" y1="320" x2="790" y2="320" stroke="#333" stroke-width="2"/>
+  <polygon points="790,320 782,316 782,324" fill="#333"/>
+  
+  <!-- Horizontal Flow Arrows Production -->
+  <line x1="270" y1="470" x2="310" y2="470" stroke="#333" stroke-width="2"/>
+  <polygon points="310,470 302,466 302,474" fill="#333"/>
+  
+  <line x1="420" y1="470" x2="430" y2="470" stroke="#333" stroke-width="2"/>
+  <polygon points="430,470 422,466 422,474" fill="#333"/>
+  
+  <line x1="540" y1="470" x2="550" y2="470" stroke="#333" stroke-width="2"/>
+  <polygon points="550,470 542,466 542,474" fill="#333"/>
+  
+  <line x1="660" y1="470" x2="670" y2="470" stroke="#333" stroke-width="2"/>
+  <polygon points="670,470 662,466 662,474" fill="#333"/>
+  
+  <line x1="780" y1="470" x2="790" y2="470" stroke="#333" stroke-width="2"/>
+  <polygon points="790,470 782,466 782,474" fill="#333"/>
+  
+  <!-- Vertical Promotion Arrows -->
+  <line x1="830" y1="190" x2="830" y2="290" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+  <polygon points="830,290 826,282 834,282" fill="#333"/>
+  <text x="845" y="240" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333">PR Promotion</text>
+  
+  <line x1="830" y1="340" x2="830" y2="440" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+  <polygon points="830,440 826,432 834,432" fill="#333"/>
+  <text x="845" y="390" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333">PR Promotion</text>
+  
+  <!-- Role Legend -->
+  <rect x="100" y="540" width="220" height="40" rx="5" fill="#e1bee7" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="210" y="565" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#7b1fa2">Infrastructure/Network Team</text>
+  <text x="210" y="580" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#7b1fa2">(Creates DNS changes)</text>
+  
+  <rect x="330" y="540" width="220" height="40" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <text x="440" y="565" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1976d2">Change Approvers</text>
+  <text x="440" y="580" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#1976d2">(Review and approve PRs)</text>
+  
+  <rect x="560" y="540" width="220" height="40" rx="5" fill="#ffecb3" stroke="#ff8f00" stroke-width="2"/>
+  <text x="670" y="565" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ff8f00">DevOps Team</text>
+  <text x="670" y="580" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#ff8f00">(Owns and maintains pipeline)</text>
+  
+  <!-- Legend -->
+  <rect x="100" y="490" width="800" height="30" rx="5" fill="white" stroke="#333" stroke-width="1"/>
+  <text x="110" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">Legend: </text>
+  <line x1="160" y1="510" x2="190" y2="510" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="195" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">Promotion Flow </text>
+  
+  <line x1="300" y1="510" x2="330" y2="510" stroke="#333" stroke-width="1"/>
+  <polygon points="330,510 322,506 322,514" fill="#333"/>
+  <text x="335" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">Process Flow</text>
+  
+  <rect x="460" y="500" width="20" height="12" fill="#e1f5fe" stroke="#0288d1" stroke-width="1"/>
+  <text x="485" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">Develop Env</text>
+  
+  <rect x="580" y="500" width="20" height="12" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="605" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">Staging Env</text>
+  
+  <rect x="700" y="500" width="20" height="12" fill="#fff3e0" stroke="#f57c00" stroke-width="1"/>
+  <text x="725" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">Production Env</text>
+</svg>

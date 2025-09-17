@@ -337,6 +337,85 @@ module "subdomain_test-zone_com_delegation_records" {
 }
 ```
 
+## Route53 Importer Script
+
+Automate importing existing Route53 hosted zones into this Terraform repo using `scripts/generate_terraform_zones.py`. The script connects to AWS, discovers existing public hosted zones and records, and generates Terraform modules and import helpers for you.
+
+### What It Does
+- Generates one file per zone in `root/zones/<zone>.tf` using terraform-aws-modules for zones and records.
+- For subdomains, creates a reusable delegation set, the subdomain zone, and an NS delegation record in the parent zone.
+- Updates `root/zones/outputs.tf` with per-zone outputs and the combined `all_zones` map.
+- Updates `root/outputs.tf` with references to each zone output.
+- Prints tailored `terraform import` commands, or optionally writes `root/imports.tf` with Terraform import blocks.
+
+### Prerequisites
+- Python 3 and `boto3` installed locally.
+  - Install: `pip install boto3`
+- AWS credentials available to the script (environment variables, AWS config/credentials file, SSO, or role via `aws-vault`). The credentials must have Route53 read permissions.
+
+### Usage
+Run from anywhere; the script auto-detects the project root.
+
+```bash
+# Process a single zone
+python scripts/generate_terraform_zones.py --domain example.com
+
+# Process all zones in the AWS account
+python scripts/generate_terraform_zones.py --all-domains
+
+# Dry run (shows what would be created without writing files)
+python scripts/generate_terraform_zones.py --all-domains --dry-run
+
+# Overwrite existing generated zone files
+python scripts/generate_terraform_zones.py --domain example.com --force
+
+# Write Terraform import blocks to root/imports.tf instead of printing commands
+python scripts/generate_terraform_zones.py --domain example.com --import-blocks
+
+# Use a custom zones directory (defaults to ./root/zones)
+python scripts/generate_terraform_zones.py --all-domains --zones-dir ./root/zones
+```
+
+Flags at a glance:
+- `--domain <name>`: Process a single hosted zone by name.
+- `--all-domains`: Process every hosted zone returned by Route53.
+- `--dry-run`: Print actions and previews; make no changes.
+- `--force`: Overwrite existing `root/zones/<zone>.tf` if present.
+- `--import-blocks`: Create `root/imports.tf` with import blocks; otherwise print shell commands.
+- `--zones-dir <path>`: Where to write zone files; defaults to `root/zones`.
+
+### Typical Workflow
+1. Generate files for one or more zones.
+   ```bash
+   python scripts/generate_terraform_zones.py --domain example.com
+   # or
+   python scripts/generate_terraform_zones.py --all-domains
+   ```
+2. Review the generated files in `root/zones/` and changes to `root/zones/outputs.tf` and `root/outputs.tf`.
+3. In `root/`, initialize and plan:
+   ```bash
+   cd root
+   terraform init
+   terraform plan
+   ```
+4. Import existing resources using the commands printed by the script, or apply the generated `imports.tf` if you used `--import-blocks`.
+5. Run `terraform plan` again to confirm no drift, then `terraform apply` when satisfied.
+
+### Notes and Limitations
+- Import-only: The script does not create new hosted zones. It generates Terraform for zones that already exist in Route53.
+- Public zones only: Private zones are skipped.
+- Records module uses `zone_name`: Ensure the hosted zone exists in Route53 before planning. NS and SOA apex records are skipped (managed by Route53).
+- TXT, MX, and Alias records: The script formats these appropriately, but edge cases with special characters may require manual adjustments.
+- Idempotency: Re-run with `--force` to regenerate files for a zone.
+
+### Troubleshooting
+- AWS credentials not found:
+  - Configure credentials (e.g., `aws configure`, `aws sso login`, or `aws-vault exec <profile> -- <cmd>`), then rerun the script.
+- Terraform plan errors like “no matching Route 53 Hosted Zone found” for records:
+  - Import the hosted zone first using the commands provided, then re-run `terraform plan`.
+- Duplicate imports:
+  - If `root/imports.tf` exists and you need to regenerate, rerun with `--force` or delete the file and re-run with `--import-blocks`.
+
 ## Updating Outputs
 
 When creating a new domain or subdomain, you need to update the `outputs.tf` file to include the new resources. This ensures that the necessary outputs are available for other modules or for reference.
