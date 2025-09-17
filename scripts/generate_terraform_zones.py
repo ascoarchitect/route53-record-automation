@@ -19,7 +19,6 @@ Usage:
 The script can be run from any directory - it will automatically find the correct paths.
 """
 
-import os
 import sys
 import argparse
 import re
