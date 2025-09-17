@@ -14,7 +14,7 @@ This repository contains Terraform configurations for managing Route53 DNS zones
 ## Prerequisites
 
 - Terraform >= 1.7.0
-- AWS Route53 Public Registry Module >= 4.0
+- AWS Route53 Public Registry Module >= 5.0
 - AWS CLI configured with appropriate permissions
 - GitHub repository with necessary secrets and variables:
   - `AWS_ROLE_ARN`: ARN of the IAM role for OIDC authentication
@@ -184,7 +184,7 @@ git checkout -b feature/add-new-zone
 # Create the zone
 module "test_zone_com" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 4.0"
+  version = "~> 5.0"
   zones = {
     "test-zone.com" = {
       comment = "Test zone managed by Terraform"
@@ -202,7 +202,7 @@ module "test_zone_com" {
 # Create zone records
 module "test_zone_com_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   zone_name = "test-zone.com"
 
@@ -267,7 +267,7 @@ git push origin feature/add-new-zone
 # Create delegation set
 module "subdomain_test-zone_com_delegation_set" {
   source  = "terraform-aws-modules/route53/aws//modules/delegation-sets"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   delegation_sets = {
     "subdomain_set" = {
@@ -279,7 +279,7 @@ module "subdomain_test-zone_com_delegation_set" {
 # Create the subdomain zone using the delegation set
 module "subdomain_test-zone_com_subdomain_zone" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   zones = {
     "subdomain.test-zone.com" = {
@@ -295,7 +295,7 @@ module "subdomain_test-zone_com_subdomain_zone" {
 # Configure the records for the subdomain
 module "subdomain_test-zone_com_subdomain_zone_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   zone_name = "subdomain.test-zone.com"
 
@@ -320,7 +320,7 @@ module "subdomain_test-zone_com_subdomain_zone_records" {
 # Add NS records to the parent zone for delegation
 module "subdomain_test-zone_com_delegation_records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   zone_name = "test-zone.com"
 
